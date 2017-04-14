@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86964c57baa1479a88db401640bd7174" Name="Diagram1">
+        <EntityTypeShape EntityType="AseCalendarModel.dcs_documentos" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AseCalendarModel.dde_dependencia_de_etapas" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AseCalendarModel.etp_etapas" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="AseCalendarModel.pln_plan" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="AseCalendarModel.fk_etp_dcs" ManuallyRouted="false" />
+        <AssociationConnector Association="AseCalendarModel.fk_etp_dde_dependiente" ManuallyRouted="false" />
+        <AssociationConnector Association="AseCalendarModel.fk_etp_dde_principal" ManuallyRouted="false" />
+        <AssociationConnector Association="AseCalendarModel.fk_pln_etp" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

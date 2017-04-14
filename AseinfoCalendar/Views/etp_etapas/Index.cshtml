@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AseinfoCalendar.Models.etp_etapas>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_orden)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_descripciom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_objetivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_usuario_creacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_fecha_grabacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_fecha_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etp_fecha_fin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_plan.pln_nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_orden)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_descripciom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_objetivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_usuario_creacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_fecha_grabacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_fecha_inicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etp_fecha_fin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_plan.pln_nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.etp_codigo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.etp_codigo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.etp_codigo })
+        </td>
+    </tr>
+}
+
+</table>

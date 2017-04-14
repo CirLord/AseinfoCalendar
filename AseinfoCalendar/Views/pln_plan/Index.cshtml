@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AseinfoCalendar.Models.pln_plan>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_objetivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_usuario_creacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_fecha_creacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pln_codigo_visual)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_objetivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_usuario_creacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_fecha_creacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_codigo_visual)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.pln_codigo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.pln_codigo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.pln_codigo })
+        </td>
+    </tr>
+}
+
+</table>

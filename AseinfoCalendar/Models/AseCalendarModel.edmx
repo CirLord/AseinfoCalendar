@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AseCalendarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dcs_documentos">
+          <Key>
+            <PropertyRef Name="dcs_codigo" />
+          </Key>
+          <Property Name="dcs_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dcs_nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="dcs_usuario_creacion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dcs_fecha_grabacion" Type="datetime" Nullable="false" />
+          <Property Name="dcs_ruta" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="etp_codigo" Type="int" />
+        </EntityType>
+        <EntityType Name="dde_dependencia_de_etapas">
+          <Key>
+            <PropertyRef Name="dde_codigo" />
+          </Key>
+          <Property Name="dde_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dde_usuario_creacion" Type="varchar" MaxLength="30" />
+          <Property Name="dde_fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="dde_etapa_principal" Type="int" Nullable="false" />
+          <Property Name="dde_etapa_dependiente" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="etp_etapas">
+          <Key>
+            <PropertyRef Name="etp_codigo" />
+          </Key>
+          <Property Name="etp_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="etp_nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="etp_orden" Type="int" Nullable="false" />
+          <Property Name="etp_descripciom" Type="text" />
+          <Property Name="etp_objetivo" Type="text" />
+          <Property Name="etp_usuario_creacion" Type="varchar" MaxLength="30" />
+          <Property Name="etp_fecha_grabacion" Type="datetime" Nullable="false" />
+          <Property Name="pln_codigo" Type="int" />
+          <Property Name="etp_fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="etp_fecha_fin" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pln_plan">
+          <Key>
+            <PropertyRef Name="pln_codigo" />
+          </Key>
+          <Property Name="pln_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pln_nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="pln_descripcion" Type="text" />
+          <Property Name="pln_objetivo" Type="text" />
+          <Property Name="pln_usuario_creacion" Type="varchar" MaxLength="30" />
+          <Property Name="pln_fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="pln_codigo_visual" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_etp_dcs">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="0..1" />
+          <End Role="dcs_documentos" Type="Self.dcs_documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dcs_documentos">
+              <PropertyRef Name="etp_codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_etp_dde_dependiente">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="1" />
+          <End Role="dde_dependencia_de_etapas" Type="Self.dde_dependencia_de_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dde_dependencia_de_etapas">
+              <PropertyRef Name="dde_etapa_dependiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_etp_dde_principal">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="1" />
+          <End Role="dde_dependencia_de_etapas" Type="Self.dde_dependencia_de_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dde_dependencia_de_etapas">
+              <PropertyRef Name="dde_etapa_principal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pln_etp">
+          <End Role="pln_plan" Type="Self.pln_plan" Multiplicity="0..1" />
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pln_plan">
+              <PropertyRef Name="pln_codigo" />
+            </Principal>
+            <Dependent Role="etp_etapas">
+              <PropertyRef Name="pln_codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AseCalendarModelStoreContainer">
+          <EntitySet Name="dcs_documentos" EntityType="Self.dcs_documentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dde_dependencia_de_etapas" EntityType="Self.dde_dependencia_de_etapas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="etp_etapas" EntityType="Self.etp_etapas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pln_plan" EntityType="Self.pln_plan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_etp_dcs" Association="Self.fk_etp_dcs">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dcs_documentos" EntitySet="dcs_documentos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_etp_dde_dependiente" Association="Self.fk_etp_dde_dependiente">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dde_dependencia_de_etapas" EntitySet="dde_dependencia_de_etapas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_etp_dde_principal" Association="Self.fk_etp_dde_principal">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dde_dependencia_de_etapas" EntitySet="dde_dependencia_de_etapas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pln_etp" Association="Self.fk_pln_etp">
+            <End Role="pln_plan" EntitySet="pln_plan" />
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AseCalendarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dcs_documentos">
+          <Key>
+            <PropertyRef Name="dcs_codigo" />
+          </Key>
+          <Property Name="dcs_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dcs_nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dcs_usuario_creacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dcs_fecha_grabacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dcs_ruta" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="etp_codigo" Type="Int32" />
+          <NavigationProperty Name="etp_etapas" Relationship="Self.fk_etp_dcs" FromRole="dcs_documentos" ToRole="etp_etapas" />
+        </EntityType>
+        <EntityType Name="dde_dependencia_de_etapas">
+          <Key>
+            <PropertyRef Name="dde_codigo" />
+          </Key>
+          <Property Name="dde_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dde_usuario_creacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="dde_fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dde_etapa_principal" Type="Int32" Nullable="false" />
+          <Property Name="dde_etapa_dependiente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="etp_etapas" Relationship="Self.fk_etp_dde_dependiente" FromRole="dde_dependencia_de_etapas" ToRole="etp_etapas" />
+          <NavigationProperty Name="etp_etapas1" Relationship="Self.fk_etp_dde_principal" FromRole="dde_dependencia_de_etapas" ToRole="etp_etapas" />
+        </EntityType>
+        <EntityType Name="etp_etapas">
+          <Key>
+            <PropertyRef Name="etp_codigo" />
+          </Key>
+          <Property Name="etp_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="etp_nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="etp_orden" Type="Int32" Nullable="false" />
+          <Property Name="etp_descripciom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="etp_objetivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="etp_usuario_creacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="etp_fecha_grabacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pln_codigo" Type="Int32" />
+          <Property Name="etp_fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="etp_fecha_fin" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="dcs_documentos" Relationship="Self.fk_etp_dcs" FromRole="etp_etapas" ToRole="dcs_documentos" />
+          <NavigationProperty Name="dde_dependencia_de_etapas" Relationship="Self.fk_etp_dde_dependiente" FromRole="etp_etapas" ToRole="dde_dependencia_de_etapas" />
+          <NavigationProperty Name="dde_dependencia_de_etapas1" Relationship="Self.fk_etp_dde_principal" FromRole="etp_etapas" ToRole="dde_dependencia_de_etapas" />
+          <NavigationProperty Name="pln_plan" Relationship="Self.fk_pln_etp" FromRole="etp_etapas" ToRole="pln_plan" />
+        </EntityType>
+        <EntityType Name="pln_plan">
+          <Key>
+            <PropertyRef Name="pln_codigo" />
+          </Key>
+          <Property Name="pln_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pln_nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pln_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pln_objetivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pln_usuario_creacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="pln_fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pln_codigo_visual" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="etp_etapas" Relationship="Self.fk_pln_etp" FromRole="pln_plan" ToRole="etp_etapas" />
+        </EntityType>
+        <Association Name="fk_etp_dcs">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="0..1" />
+          <End Role="dcs_documentos" Type="Self.dcs_documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dcs_documentos">
+              <PropertyRef Name="etp_codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_etp_dde_dependiente">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="1" />
+          <End Role="dde_dependencia_de_etapas" Type="Self.dde_dependencia_de_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dde_dependencia_de_etapas">
+              <PropertyRef Name="dde_etapa_dependiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_etp_dde_principal">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="1" />
+          <End Role="dde_dependencia_de_etapas" Type="Self.dde_dependencia_de_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="dde_dependencia_de_etapas">
+              <PropertyRef Name="dde_etapa_principal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pln_etp">
+          <End Role="pln_plan" Type="Self.pln_plan" Multiplicity="0..1" />
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pln_plan">
+              <PropertyRef Name="pln_codigo" />
+            </Principal>
+            <Dependent Role="etp_etapas">
+              <PropertyRef Name="pln_codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AseCalendarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dcs_documentos" EntityType="Self.dcs_documentos" />
+          <EntitySet Name="dde_dependencia_de_etapas" EntityType="Self.dde_dependencia_de_etapas" />
+          <EntitySet Name="etp_etapas" EntityType="Self.etp_etapas" />
+          <EntitySet Name="pln_plan" EntityType="Self.pln_plan" />
+          <AssociationSet Name="fk_etp_dcs" Association="Self.fk_etp_dcs">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dcs_documentos" EntitySet="dcs_documentos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_etp_dde_dependiente" Association="Self.fk_etp_dde_dependiente">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dde_dependencia_de_etapas" EntitySet="dde_dependencia_de_etapas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_etp_dde_principal" Association="Self.fk_etp_dde_principal">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="dde_dependencia_de_etapas" EntitySet="dde_dependencia_de_etapas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pln_etp" Association="Self.fk_pln_etp">
+            <End Role="pln_plan" EntitySet="pln_plan" />
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AseCalendarModelStoreContainer" CdmEntityContainer="AseCalendarEntities">
+          <EntitySetMapping Name="dcs_documentos">
+            <EntityTypeMapping TypeName="AseCalendarModel.dcs_documentos">
+              <MappingFragment StoreEntitySet="dcs_documentos">
+                <ScalarProperty Name="dcs_codigo" ColumnName="dcs_codigo" />
+                <ScalarProperty Name="dcs_nombre" ColumnName="dcs_nombre" />
+                <ScalarProperty Name="dcs_usuario_creacion" ColumnName="dcs_usuario_creacion" />
+                <ScalarProperty Name="dcs_fecha_grabacion" ColumnName="dcs_fecha_grabacion" />
+                <ScalarProperty Name="dcs_ruta" ColumnName="dcs_ruta" />
+                <ScalarProperty Name="etp_codigo" ColumnName="etp_codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dde_dependencia_de_etapas">
+            <EntityTypeMapping TypeName="AseCalendarModel.dde_dependencia_de_etapas">
+              <MappingFragment StoreEntitySet="dde_dependencia_de_etapas">
+                <ScalarProperty Name="dde_codigo" ColumnName="dde_codigo" />
+                <ScalarProperty Name="dde_usuario_creacion" ColumnName="dde_usuario_creacion" />
+                <ScalarProperty Name="dde_fecha_creacion" ColumnName="dde_fecha_creacion" />
+                <ScalarProperty Name="dde_etapa_principal" ColumnName="dde_etapa_principal" />
+                <ScalarProperty Name="dde_etapa_dependiente" ColumnName="dde_etapa_dependiente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="etp_etapas">
+            <EntityTypeMapping TypeName="AseCalendarModel.etp_etapas">
+              <MappingFragment StoreEntitySet="etp_etapas">
+                <ScalarProperty Name="etp_codigo" ColumnName="etp_codigo" />
+                <ScalarProperty Name="etp_nombre" ColumnName="etp_nombre" />
+                <ScalarProperty Name="etp_orden" ColumnName="etp_orden" />
+                <ScalarProperty Name="etp_descripciom" ColumnName="etp_descripciom" />
+                <ScalarProperty Name="etp_objetivo" ColumnName="etp_objetivo" />
+                <ScalarProperty Name="etp_usuario_creacion" ColumnName="etp_usuario_creacion" />
+                <ScalarProperty Name="etp_fecha_grabacion" ColumnName="etp_fecha_grabacion" />
+                <ScalarProperty Name="pln_codigo" ColumnName="pln_codigo" />
+                <ScalarProperty Name="etp_fecha_inicio" ColumnName="etp_fecha_inicio" />
+                <ScalarProperty Name="etp_fecha_fin" ColumnName="etp_fecha_fin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pln_plan">
+            <EntityTypeMapping TypeName="AseCalendarModel.pln_plan">
+              <MappingFragment StoreEntitySet="pln_plan">
+                <ScalarProperty Name="pln_codigo" ColumnName="pln_codigo" />
+                <ScalarProperty Name="pln_nombre" ColumnName="pln_nombre" />
+                <ScalarProperty Name="pln_descripcion" ColumnName="pln_descripcion" />
+                <ScalarProperty Name="pln_objetivo" ColumnName="pln_objetivo" />
+                <ScalarProperty Name="pln_usuario_creacion" ColumnName="pln_usuario_creacion" />
+                <ScalarProperty Name="pln_fecha_creacion" ColumnName="pln_fecha_creacion" />
+                <ScalarProperty Name="pln_codigo_visual" ColumnName="pln_codigo_visual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

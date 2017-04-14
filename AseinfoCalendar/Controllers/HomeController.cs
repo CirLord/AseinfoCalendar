@@ -15,7 +15,10 @@ namespace AseinfoCalendar.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            using (AseinfoCalendar.Models.AseCalendarEntities db = new Models.AseCalendarEntities()) {
+                
+            }
+                ViewBag.Message = "Your application description page.";
 
             return View();
         }

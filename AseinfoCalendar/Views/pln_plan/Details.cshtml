@@ -1,0 +1,66 @@
+﻿@model AseinfoCalendar.Models.pln_plan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>pln_plan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_objetivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_objetivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_usuario_creacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_usuario_creacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_fecha_creacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_fecha_creacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pln_codigo_visual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pln_codigo_visual)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pln_codigo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

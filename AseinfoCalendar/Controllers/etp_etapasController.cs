@@ -48,10 +48,11 @@ namespace AseinfoCalendar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "etp_codigo,etp_nombre,etp_orden,etp_descripciom,etp_objetivo,etp_usuario_creacion,etp_fecha_grabacion,pln_codigo,etp_fecha_inicio,etp_fecha_fin")] etp_etapas etp_etapas)
+        public ActionResult Create([Bind(Include = "etp_codigo,etp_nombre,etp_orden,etp_descripciom,etp_objetivo,etp_usuario_creacion,etp_fecha_grabacion,pln_codigo,etp_fecha_inicio,etp_fecha_fin")] etp_etapas etp_etapas, int? main_id, bool? is_dependant)
         {
             if (ModelState.IsValid)
             {
+                etp_etapas.etp_fecha_grabacion = DateTime.Today;
                 db.etp_etapas.Add(etp_etapas);
                 db.SaveChanges();
                 return RedirectToAction("Index");

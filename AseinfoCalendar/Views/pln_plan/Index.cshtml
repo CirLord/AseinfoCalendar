@@ -1,33 +1,27 @@
 ﻿@model IEnumerable<AseinfoCalendar.Models.pln_plan>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Planes";
 }
 
-<h2>Index</h2>
+<h2>Planes</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo Plan", "Create")
 </p>
-<table class="table">
+<table class="table table-responsive">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.pln_nombre)
+            Plan
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pln_descripcion)
+            Código Visual
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pln_objetivo)
+        <th class="hidden-xs">
+            Descripción
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pln_usuario_creacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pln_fecha_creacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pln_codigo_visual)
+        <th class="hidden-xs">
+            Objetivo
         </th>
         <th></th>
     </tr>
@@ -38,24 +32,20 @@
             @Html.DisplayFor(modelItem => item.pln_nombre)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.pln_codigo_visual)
+        </td>
+        <td class="hidden-xs">
             @Html.DisplayFor(modelItem => item.pln_descripcion)
         </td>
-        <td>
+        <td class="hidden-xs">
             @Html.DisplayFor(modelItem => item.pln_objetivo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.pln_usuario_creacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pln_fecha_creacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pln_codigo_visual)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.pln_codigo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.pln_codigo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.pln_codigo })
+            @Html.ActionLink("Etapas", "Index", "etp_etapas") |
+            @Html.ActionLink("Editar", "Edit", new { id=item.pln_codigo }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.pln_codigo }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.pln_codigo })
+            
         </td>
     </tr>
 }

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AseinfoCalendar.Models.pls_planeacion_semanal>
+
+@{
+    ViewBag.Title = "Actividades";
+}
+
+<h2>Actividades</h2>
+
+<p>
+    @Html.ActionLink("Nueva Actividad", "Create")
+</p>
+<table class="table table-responsive">
+    <tr>
+        <th class="hidden-xs">
+            Descripción
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th class="hidden-xs">
+            Hora Desde
+        </th>
+        <th class="hidden-xs">
+            Hora Hasta
+        </th>
+        <th class="hidden-sm hidden-xs">
+            Estado
+        </th>
+        <th class="hidden-sm hidden-xs">
+            Etapa
+        </th>
+        <th>
+            Plan
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="hidden-xs">
+            @Html.DisplayFor(modelItem => item.pls_descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pls_fecha)
+        </td>
+        <td class="hidden-xs">
+            @Html.DisplayFor(modelItem => item.pls_hora_desde)
+        </td>
+        <td class="hidden-xs">
+            @Html.DisplayFor(modelItem => item.pls_hora_hasta)
+        </td>
+        <td class="hidden-sm hidden-xs">
+            @Html.DisplayFor(modelItem => item.pls_cancelado)
+        </td>
+        <td class="hidden-sm hidden-xs">
+            @Html.DisplayFor(modelItem => item.etp_etapas.etp_nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pln_plan.pln_nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.pls_codigo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.pls_codigo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.pls_codigo })
+        </td>
+    </tr>
+}
+
+</table>

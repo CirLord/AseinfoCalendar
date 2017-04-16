@@ -1,38 +1,32 @@
 ﻿@model IEnumerable<AseinfoCalendar.Models.etp_etapas>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Etapas";
 }
 
-<h2>Index</h2>
+<h2>Etapas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nueva Etapa", "Create")
 </p>
-<table class="table">
+<table class="table table-responsive">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.etp_nombre)
         </th>
-        <th>
+        <th class="hidden-xs hidden-sm">
             @Html.DisplayNameFor(model => model.etp_orden)
         </th>
-        <th>
+        <th class="hidden-xs hidden-sm">
             @Html.DisplayNameFor(model => model.etp_descripciom)
         </th>
-        <th>
+        <th class="hidden-xs hidden-sm">
             @Html.DisplayNameFor(model => model.etp_objetivo)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.etp_usuario_creacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.etp_fecha_grabacion)
-        </th>
-        <th>
+        <th class="hidden-xs">
             @Html.DisplayNameFor(model => model.etp_fecha_inicio)
         </th>
-        <th>
+        <th class="hidden-xs">
             @Html.DisplayNameFor(model => model.etp_fecha_fin)
         </th>
         <th>
@@ -46,25 +40,19 @@
         <td>
             @Html.DisplayFor(modelItem => item.etp_nombre)
         </td>
-        <td>
+        <td class="hidden-xs hidden-sm">
             @Html.DisplayFor(modelItem => item.etp_orden)
         </td>
-        <td>
+        <td class="hidden-xs hidden-sm">
             @Html.DisplayFor(modelItem => item.etp_descripciom)
         </td>
-        <td>
+        <td class="hidden-xs hidden-sm">
             @Html.DisplayFor(modelItem => item.etp_objetivo)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.etp_usuario_creacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.etp_fecha_grabacion)
-        </td>
-        <td>
+        <td class="hidden-xs">
             @Html.DisplayFor(modelItem => item.etp_fecha_inicio)
         </td>
-        <td>
+        <td class="hidden-xs">
             @Html.DisplayFor(modelItem => item.etp_fecha_fin)
         </td>
         <td>

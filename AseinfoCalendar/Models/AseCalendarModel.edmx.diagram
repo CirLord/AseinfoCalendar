@@ -13,6 +13,9 @@
         <AssociationConnector Association="AseCalendarModel.fk_etp_dde_dependiente" ManuallyRouted="false" />
         <AssociationConnector Association="AseCalendarModel.fk_etp_dde_principal" ManuallyRouted="false" />
         <AssociationConnector Association="AseCalendarModel.fk_pln_etp" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AseCalendarModel.pls_planeacion_semanal" Width="1.5" PointX="8.25" PointY="2.25" />
+        <AssociationConnector Association="AseCalendarModel.FK_pls_planeacion_semanal_etp_etapas" />
+        <AssociationConnector Association="AseCalendarModel.FK_pls_planeacion_semanal_pln_plan" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,5 +29,6 @@ namespace AseinfoCalendar.Models
         public virtual DbSet<dde_dependencia_de_etapas> dde_dependencia_de_etapas { get; set; }
         public virtual DbSet<etp_etapas> etp_etapas { get; set; }
         public virtual DbSet<pln_plan> pln_plan { get; set; }
+        public virtual DbSet<pls_planeacion_semanal> pls_planeacion_semanal { get; set; }
     }
 }

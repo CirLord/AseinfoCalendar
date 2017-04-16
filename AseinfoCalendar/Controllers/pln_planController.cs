@@ -50,6 +50,7 @@ namespace AseinfoCalendar.Controllers
         {
             if (ModelState.IsValid)
             {
+                pln_plan.pln_fecha_creacion = DateTime.Today;
                 db.pln_plan.Add(pln_plan);
                 db.SaveChanges();
                 return RedirectToAction("Index");

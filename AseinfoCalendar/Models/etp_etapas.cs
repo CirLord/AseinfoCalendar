@@ -20,6 +20,7 @@ namespace AseinfoCalendar.Models
             this.dcs_documentos = new HashSet<dcs_documentos>();
             this.dde_dependencia_de_etapas = new HashSet<dde_dependencia_de_etapas>();
             this.dde_dependencia_de_etapas1 = new HashSet<dde_dependencia_de_etapas>();
+            this.pls_planeacion_semanal = new HashSet<pls_planeacion_semanal>();
         }
     
         public int etp_codigo { get; set; }
@@ -40,5 +41,7 @@ namespace AseinfoCalendar.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dde_dependencia_de_etapas> dde_dependencia_de_etapas1 { get; set; }
         public virtual pln_plan pln_plan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pls_planeacion_semanal> pls_planeacion_semanal { get; set; }
     }
 }

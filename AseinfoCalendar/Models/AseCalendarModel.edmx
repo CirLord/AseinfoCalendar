@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AseCalendarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AseCalendarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="dcs_documentos">
           <Key>
             <PropertyRef Name="dcs_codigo" />
@@ -52,6 +52,22 @@
           <Property Name="pln_usuario_creacion" Type="varchar" MaxLength="30" />
           <Property Name="pln_fecha_creacion" Type="datetime" Nullable="false" />
           <Property Name="pln_codigo_visual" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pls_planeacion_semanal">
+          <Key>
+            <PropertyRef Name="pls_codigo" />
+          </Key>
+          <Property Name="pls_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pls_codpln" Type="int" Nullable="false" />
+          <Property Name="pls_codetp" Type="int" Nullable="false" />
+          <Property Name="pls_descripcion" Type="varchar(max)" />
+          <Property Name="pls_fecha" Type="datetime" Nullable="false" />
+          <Property Name="pls_hora_desde" Type="time" Precision="7" Nullable="false" />
+          <Property Name="pls_hora_hasta" Type="time" Precision="7" Nullable="false" />
+          <Property Name="pls_usuario_creacion" Type="varchar" MaxLength="50" />
+          <Property Name="pls_fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="pls_cancelado" Type="tinyint" Nullable="false" />
+          <Property Name="pls_descripcion_cancelacion" Type="varchar(max)" />
         </EntityType>
         <Association Name="fk_etp_dcs">
           <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="0..1" />
@@ -101,11 +117,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_pls_planeacion_semanal_etp_etapas">
+          <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="1" />
+          <End Role="pls_planeacion_semanal" Type="Self.pls_planeacion_semanal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="pls_planeacion_semanal">
+              <PropertyRef Name="pls_codetp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pls_planeacion_semanal_pln_plan">
+          <End Role="pln_plan" Type="Self.pln_plan" Multiplicity="1" />
+          <End Role="pls_planeacion_semanal" Type="Self.pls_planeacion_semanal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pln_plan">
+              <PropertyRef Name="pln_codigo" />
+            </Principal>
+            <Dependent Role="pls_planeacion_semanal">
+              <PropertyRef Name="pls_codpln" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AseCalendarModelStoreContainer">
           <EntitySet Name="dcs_documentos" EntityType="Self.dcs_documentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dde_dependencia_de_etapas" EntityType="Self.dde_dependencia_de_etapas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="etp_etapas" EntityType="Self.etp_etapas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pln_plan" EntityType="Self.pln_plan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pls_planeacion_semanal" EntityType="Self.pls_planeacion_semanal" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_etp_dcs" Association="Self.fk_etp_dcs">
             <End Role="etp_etapas" EntitySet="etp_etapas" />
             <End Role="dcs_documentos" EntitySet="dcs_documentos" />
@@ -122,9 +163,16 @@
             <End Role="pln_plan" EntitySet="pln_plan" />
             <End Role="etp_etapas" EntitySet="etp_etapas" />
           </AssociationSet>
+          <AssociationSet Name="FK_pls_planeacion_semanal_etp_etapas" Association="Self.FK_pls_planeacion_semanal_etp_etapas">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="pls_planeacion_semanal" EntitySet="pls_planeacion_semanal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pls_planeacion_semanal_pln_plan" Association="Self.FK_pls_planeacion_semanal_pln_plan">
+            <End Role="pln_plan" EntitySet="pln_plan" />
+            <End Role="pls_planeacion_semanal" EntitySet="pls_planeacion_semanal" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AseCalendarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -170,6 +218,7 @@
           <NavigationProperty Name="dde_dependencia_de_etapas" Relationship="Self.fk_etp_dde_dependiente" FromRole="etp_etapas" ToRole="dde_dependencia_de_etapas" />
           <NavigationProperty Name="dde_dependencia_de_etapas1" Relationship="Self.fk_etp_dde_principal" FromRole="etp_etapas" ToRole="dde_dependencia_de_etapas" />
           <NavigationProperty Name="pln_plan" Relationship="Self.fk_pln_etp" FromRole="etp_etapas" ToRole="pln_plan" />
+          <NavigationProperty Name="pls_planeacion_semanal" Relationship="AseCalendarModel.FK_pls_planeacion_semanal_etp_etapas" FromRole="etp_etapas" ToRole="pls_planeacion_semanal" />
         </EntityType>
         <EntityType Name="pln_plan">
           <Key>
@@ -183,6 +232,7 @@
           <Property Name="pln_fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="pln_codigo_visual" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="etp_etapas" Relationship="Self.fk_pln_etp" FromRole="pln_plan" ToRole="etp_etapas" />
+          <NavigationProperty Name="pls_planeacion_semanal" Relationship="AseCalendarModel.FK_pls_planeacion_semanal_pln_plan" FromRole="pln_plan" ToRole="pls_planeacion_semanal" />
         </EntityType>
         <Association Name="fk_etp_dcs">
           <End Role="etp_etapas" Type="Self.etp_etapas" Multiplicity="0..1" />
@@ -253,7 +303,58 @@
             <End Role="pln_plan" EntitySet="pln_plan" />
             <End Role="etp_etapas" EntitySet="etp_etapas" />
           </AssociationSet>
+          <EntitySet Name="pls_planeacion_semanal" EntityType="AseCalendarModel.pls_planeacion_semanal" />
+          <AssociationSet Name="FK_pls_planeacion_semanal_etp_etapas" Association="AseCalendarModel.FK_pls_planeacion_semanal_etp_etapas">
+            <End Role="etp_etapas" EntitySet="etp_etapas" />
+            <End Role="pls_planeacion_semanal" EntitySet="pls_planeacion_semanal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pls_planeacion_semanal_pln_plan" Association="AseCalendarModel.FK_pls_planeacion_semanal_pln_plan">
+            <End Role="pln_plan" EntitySet="pln_plan" />
+            <End Role="pls_planeacion_semanal" EntitySet="pls_planeacion_semanal" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="pls_planeacion_semanal">
+          <Key>
+            <PropertyRef Name="pls_codigo" />
+          </Key>
+          <Property Name="pls_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pls_codpln" Type="Int32" Nullable="false" />
+          <Property Name="pls_codetp" Type="Int32" Nullable="false" />
+          <Property Name="pls_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pls_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pls_hora_desde" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="pls_hora_hasta" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="pls_usuario_creacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pls_fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pls_cancelado" Type="Byte" Nullable="false" />
+          <Property Name="pls_descripcion_cancelacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="etp_etapas" Relationship="AseCalendarModel.FK_pls_planeacion_semanal_etp_etapas" FromRole="pls_planeacion_semanal" ToRole="etp_etapas" />
+          <NavigationProperty Name="pln_plan" Relationship="AseCalendarModel.FK_pls_planeacion_semanal_pln_plan" FromRole="pls_planeacion_semanal" ToRole="pln_plan" />
+        </EntityType>
+        <Association Name="FK_pls_planeacion_semanal_etp_etapas">
+          <End Type="AseCalendarModel.etp_etapas" Role="etp_etapas" Multiplicity="1" />
+          <End Type="AseCalendarModel.pls_planeacion_semanal" Role="pls_planeacion_semanal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etp_etapas">
+              <PropertyRef Name="etp_codigo" />
+            </Principal>
+            <Dependent Role="pls_planeacion_semanal">
+              <PropertyRef Name="pls_codetp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pls_planeacion_semanal_pln_plan">
+          <End Type="AseCalendarModel.pln_plan" Role="pln_plan" Multiplicity="1" />
+          <End Type="AseCalendarModel.pls_planeacion_semanal" Role="pls_planeacion_semanal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pln_plan">
+              <PropertyRef Name="pln_codigo" />
+            </Principal>
+            <Dependent Role="pls_planeacion_semanal">
+              <PropertyRef Name="pls_codpln" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -309,6 +410,23 @@
                 <ScalarProperty Name="pln_usuario_creacion" ColumnName="pln_usuario_creacion" />
                 <ScalarProperty Name="pln_fecha_creacion" ColumnName="pln_fecha_creacion" />
                 <ScalarProperty Name="pln_codigo_visual" ColumnName="pln_codigo_visual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pls_planeacion_semanal">
+            <EntityTypeMapping TypeName="AseCalendarModel.pls_planeacion_semanal">
+              <MappingFragment StoreEntitySet="pls_planeacion_semanal">
+                <ScalarProperty Name="pls_descripcion_cancelacion" ColumnName="pls_descripcion_cancelacion" />
+                <ScalarProperty Name="pls_cancelado" ColumnName="pls_cancelado" />
+                <ScalarProperty Name="pls_fecha_creacion" ColumnName="pls_fecha_creacion" />
+                <ScalarProperty Name="pls_usuario_creacion" ColumnName="pls_usuario_creacion" />
+                <ScalarProperty Name="pls_hora_hasta" ColumnName="pls_hora_hasta" />
+                <ScalarProperty Name="pls_hora_desde" ColumnName="pls_hora_desde" />
+                <ScalarProperty Name="pls_fecha" ColumnName="pls_fecha" />
+                <ScalarProperty Name="pls_descripcion" ColumnName="pls_descripcion" />
+                <ScalarProperty Name="pls_codetp" ColumnName="pls_codetp" />
+                <ScalarProperty Name="pls_codpln" ColumnName="pls_codpln" />
+                <ScalarProperty Name="pls_codigo" ColumnName="pls_codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,6 +18,7 @@ namespace AseinfoCalendar.Models
         public pln_plan()
         {
             this.etp_etapas = new HashSet<etp_etapas>();
+            this.pls_planeacion_semanal = new HashSet<pls_planeacion_semanal>();
         }
     
         public int pln_codigo { get; set; }
@@ -30,5 +31,7 @@ namespace AseinfoCalendar.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<etp_etapas> etp_etapas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pls_planeacion_semanal> pls_planeacion_semanal { get; set; }
     }
 }
